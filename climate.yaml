@@ -1,0 +1,9 @@
+- platform: venstar
+  host: gnet-24513
+  humidifier: true
+- platform: venstar
+  host: gnet-d61193
+  humidifier: true
+- platform: venstar
+  host: gnet-228a1
+  humidifier: true

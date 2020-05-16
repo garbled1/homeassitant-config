@@ -1,0 +1,173 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+frontend:
+  themes: !include_dir_merge_named themes
+    
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+climate: !include climate.yaml
+sensor: !include sensors.yaml
+alarmdecoder: !include alarmdecoder.yaml
+insteon: !include insteon.yaml
+utility_meter: !include utility_meter.yaml
+device_tracker: !include device_tracker.yaml
+camera: !include cameras.yaml
+binary_sensor: !include binary_sensor.yaml
+cover: !include cover.yaml
+light: !include light.yaml
+
+logger:
+  default: info
+  logs:
+    insteonplm: info
+    #alarmdecoder: debug
+    #homeassistant.components.alarmdecoder: debug
+#    homeassistant.components.spotify: debug
+#     #custom_components.insteon_custom: debug
+
+influxdb:
+  host: influx.garbled.net
+  tags_attributes:
+    - friendly_name
+    - device_class
+    - "INSTEON ADDRESS"
+    - "INSTEON GROUP"
+
+ecowitt:
+  port: 4199
+
+spotify:
+  client_id: !secret spotify_id
+  client_secret: !secret spotify_secret
+
+
+remote:
+  - platform: harmony
+    name: Entertainment Center
+    host: HarmonyHub.garbled.net
+
+recorder:
+  exclude:
+    entities:
+      - sensor.watts_mainhouse_ac_south
+      - sensor.watts_mainhouse_water_heater
+      - sensor.watts_mainhouse_ac_north
+      - sensor.watts_mainhouse_dryer
+      - sensor.watts_mainhouse_bedroom
+      - sensor.watts_mainhouse_spa
+      - sensor.watts_mainhouse_master_bedroom
+      - sensor.watts_mainhouse_circuit_A
+      - sensor.watts_mainhouse_circuit_B
+      - sensor.watts_mainhouse_circuit_C
+      - sensor.watts_mainhouse_circuit_E
+      - sensor.watts_mainhouse_circuit_H
+      - sensor.watts_mainhouse_circuit_D
+      - sensor.watts_mainhouse_garage
+      - sensor.watts_mainhouse_lights
+      - sensor.watts_mainhouse_cooktop
+      - sensor.watts_mainhouse_oven
+      - sensor.watts_mainhouse_laundry_room
+      - sensor.watts_mainhouse_fishtank_a
+      - sensor.watts_mainhouse_fishtank_b
+      - sensor.watts_mainhouse_bathroom
+      - sensor.watts_mainhouse_entertainment_center
+      - sensor.watts_mainhouse_master_tub
+      - sensor.watts_mainhouse_nook
+      - sensor.watts_mainhouse_spa_room
+      - sensor.watts_mainhouse_washer
+      - sensor.watts_mainhouse_microwave
+      - sensor.watts_mainhouse_kitchen_outlets
+      - sensor.watts_mainhouse_kitchen_fridge
+      - sensor.watts_mainhouse_bathroom_gfci
+      - sensor.watts_mainhouse_dishwasher
+      - sensor.watts_mainhouse_mains
+
+greeneye_monitor:
+  port: 8084
+  monitors:
+    - serial_number: "01000275"
+      voltage:
+        - number: 1
+          name: mainhouse_volts
+      channels:
+        - number: 1
+          name: watts_mainhouse_ac_south
+        - number: 2
+          name: watts_mainhouse_water_heater
+        - number: 3
+          name: watts_mainhouse_ac_north
+        - number: 4
+          name: watts_mainhouse_dryer
+        - number: 5
+          name: watts_mainhouse_bedroom
+        - number: 6
+          name: watts_mainhouse_spa
+        - number: 7
+          name: watts_mainhouse_master_bedroom
+        - number: 8
+          name: watts_mainhouse_circuit_A
+        - number: 9
+          name: watts_mainhouse_circuit_B
+        - number: 10
+          name: watts_mainhouse_circuit_C
+        - number: 11
+          name: watts_mainhouse_circuit_E
+        - number: 12
+          name: watts_mainhouse_circuit_H
+        - number: 13
+          name: watts_mainhouse_circuit_D
+        - number: 14
+          name: watts_mainhouse_garage
+        - number: 15
+          name: watts_mainhouse_lights
+        - number: 16
+          name: watts_mainhouse_cooktop
+        - number: 17
+          name: watts_mainhouse_oven
+        - number: 18
+          name: watts_mainhouse_laundry_room
+        - number: 19
+          name: watts_mainhouse_fishtank_a
+        - number: 20
+          name: watts_mainhouse_fishtank_b
+        - number: 21
+          name: watts_mainhouse_bathroom
+        - number: 22
+          name: watts_mainhouse_entertainment_center
+        - number: 23
+          name: watts_mainhouse_master_tub
+        - number: 24
+          name: watts_mainhouse_nook
+        - number: 25
+          name: watts_mainhouse_spa_room
+        - number: 26
+          name: watts_mainhouse_washer
+        - number: 27
+          name: watts_mainhouse_microwave
+        - number: 28
+          name: watts_mainhouse_kitchen_outlets
+        - number: 29
+          name: watts_mainhouse_kitchen_fridge
+        - number: 30
+          name: watts_mainhouse_bathroom_gfci
+        - number: 31
+          name: watts_mainhouse_dishwasher
+        - number: 32
+          name: watts_mainhouse_mains
+
+discovery:
+
+mqtt:
+  broker: elgafar.garbled.net

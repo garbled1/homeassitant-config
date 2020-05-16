@@ -1,0 +1,6 @@
+- platform: opengarage
+  covers:
+    double_garage:
+      host: esp_38bfef.garbled.net
+      device_key: !secret opengarage_key
+      name: Double Garage

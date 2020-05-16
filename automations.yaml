@@ -1,0 +1,270 @@
+- alias: 'Warm up bedroom in the morning'
+  trigger:
+    - platform: time
+      at: '4:40:00'
+  condition:
+    - condition: template
+      value_template: '{% if state_attr("weather.home", "temperature") < 65 %}true{% endif %}'
+    - condition: template
+      value_template: '{% if state_attr("climate.mainsouth", "current_temperature") < 74 %}true{% endif %}'
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.mainsouth
+        target_temp_high: 78
+        target_temp_low: 75
+
+- alias: 'Annie Alarm Clock'
+  trigger:
+    - platform: time
+      at: '6:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.annie_alarm_switch
+      state: 'on'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.spotify
+        source: Bathroom
+    - delay:
+        seconds: 5
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.4
+        entity_id: media_player.bathroom
+    - service: spotify.play_playlist
+      data:
+        media_content_id: spotify:playlist:6Cbn5Ca1lz2jgJx22D6FzF
+        random_song: true
+    - service: light.turn_on
+      data:
+        entity_id: light.switchlinc_dimmer_24_8d_e9
+        brightness_pct: 20
+    - delay:
+        minutes: 10
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.45
+        entity_id: media_player.bathroom
+    - service: light.turn_on
+      data:
+        entity_id: light.switchlinc_dimmer_24_8d_e9
+        brightness_pct: 50
+    - delay:
+        minutes: 10
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.55
+        entity_id: media_player.bathroom
+    - service: light.turn_on
+      data:
+        entity_id: light.switchlinc_dimmer_24_8d_e9
+        brightness_pct: 100
+    - delay:
+        minutes: 110
+    - service: light.turn_off
+      data:
+        entity_id: light.switchlinc_dimmer_24_8d_e9
+
+- alias: 'Reset outdoor switches'
+  trigger:
+    - platform: time
+      at: '15:00:00'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.micro_on_off_2b_28_dd
+    - service: switch.turn_off
+      data:
+        entity_id: switch.micro_on_off_2b_28_fd
+    - service: switch.turn_off
+      data:
+        entity_id: switch.micro_on_off_2b_2a_2a
+    - service: switch.turn_off
+      data:
+        entity_id: switch.micro_on_off_2b_2a_50
+
+- alias: 'Morning Sun'
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.on_off_outdoor_module_25_98_9b 
+    - service: switch.turn_off
+      data:
+        entity_id: switch.on_off_outdoor_module_25_9b_6d
+    - service: switch.turn_off
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_db_df
+    - service: switch.turn_off
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_df_7e
+    - service: switch.turn_off
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_fd_51
+
+- alias: 'Evening Sunset early'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:30:00"
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.on_off_outdoor_module_25_98_9b 
+    - service: switch.turn_on
+      data:
+        entity_id: switch.on_off_outdoor_module_25_9b_6d
+    - service: switch.turn_on
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_db_df
+    - service: switch.turn_on
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_df_7e
+    - service: switch.turn_on
+      data:
+        entity_id: switch.switchlinc_relay_dual_band_23_fd_51
+
+- alias: 'Electricity Tariff Switch to onpeak'
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time_pattern
+      hours: "*"
+      minutes: "1"
+  condition:
+    - condition: time
+      after: '15:00:00'
+      before: '20:00:00'
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - service: utility_meter.select_tariff
+      data:
+        entity_id: utility_meter.mh_kwh_daily
+        tariff: peak
+    - service: utility_meter.select_tariff
+      data:
+        entity_id: utility_meter.mh_kwh_monthly
+        tariff: peak
+
+- alias: 'Electricity Tariff Switch to offpeak'
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time_pattern
+      hours: "*"
+      minutes: "1"
+  condition:
+    - condition: time
+      after: '20:00:00'
+      before: '15:00:00'
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: or
+      conditions:
+        - condition: time
+          weekday:
+            - sat
+            - sun
+  action:
+    - service: utility_meter.select_tariff
+      data:
+        entity_id: utility_meter.mh_kwh_daily
+        tariff: offpeak
+    - service: utility_meter.select_tariff
+      data:
+        entity_id: utility_meter.mh_kwh_monthly
+        tariff: offpeak
+
+- alias: Tim Occupancy on
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.tim_home
+      above: 10
+  action:
+    - service: device_tracker.see
+      data:
+        dev_id: Tim_S9
+        location_name: home
+        source_type: bluetooth
+
+- alias: Tim Occupancy off
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.tim_home
+      below: 10
+  action:
+    - service: device_tracker.see
+      data:
+        dev_id: Tim_S9
+        location_name: not_home
+        source_type: bluetooth
+
+- alias: Annie Occupancy on
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.annie_home
+      above: 10
+  action:
+    - service: device_tracker.see
+      data:
+        dev_id: Annie_LG
+        location_name: home
+        source_type: bluetooth
+
+- alias: Annie Occupancy off
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.annie_home
+      below: 10
+  action:
+    - service: device_tracker.see
+      data:
+        dev_id: Annie_LG
+        location_name: not_home
+        source_type: bluetooth
+
+- alias: Door open/close
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door, binary_sensor.living_room_sliding_door
+  action:
+    - service: mqtt.publish
+      data:
+        topic: monitor/scan/arrive
+    - delay: 0:05
+    - service: mqtt.publish
+      data:
+        topic: monitor/scan/depart
+
+- alias: HA startup
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - delay: 0:02
+    - service: mqtt.publish
+      data:
+        topic: monitor/scan/arrive
+    - service: mqtt.publish
+      data:
+        topic: monitor/scan/depart

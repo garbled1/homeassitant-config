@@ -1,0 +1,8 @@
+- platform: template
+  sensors:
+    ac_south_fan_state:
+      friendly_name: "AC South Fan State"
+      value_template: "{{ state_attr('climate.mainsouth', 'fan_state') | int > 0 }}"
+      device_class: power
+      icon_template: mdi:fan
+

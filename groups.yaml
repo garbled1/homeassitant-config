@@ -1,0 +1,203 @@
+kitchen:
+  name: Kitchen
+  entities:
+    - binary_sensor.kitchen_door
+    - light.switchlinc_dimmer_33_30_01
+    - light.switchlinc_dimmer_38_23_9c
+    - switch.switchlinc_relay_dual_band_23_df_7e
+    - media_player.kitchen
+    - sensor.watts_mainhouse_cooktop
+    - sensor.watts_mainhouse_dishwasher
+    - sensor.watts_mainhouse_kitchen_fridge
+    - sensor.watts_mainhouse_kitchen_outlets
+    - sensor.watts_mainhouse_microwave
+    - sensor.watts_mainhouse_oven
+
+# onewire_hubs:
+#   name: Onewire Hubs
+#   entities:
+#     - sensor.cave_hub_branch_0
+#     - sensor.cave_hub_branch_1
+#     - sensor.cave_hub_branch_2
+#     - sensor.cave_hub_branch_3
+#     - sensor.cave_hub_short_0
+#     - sensor.cave_hub_short_1
+#     - sensor.cave_hub_short_2
+#     - sensor.cave_hub_short_3
+#     - sensor.laundry_hub_branch_0
+#     - sensor.laundry_hub_branch_1
+#     - sensor.laundry_hub_branch_2
+#     - sensor.laundry_hub_branch_3
+#     - sensor.laundry_hub_short_0
+#     - sensor.laundry_hub_short_1
+#     - sensor.laundry_hub_short_2
+#     - sensor.laundry_hub_short_3
+
+garage:
+  name: Garage
+  entities:
+    - cover.double_garage
+    - sensor.double_garage_status
+    - sensor.double_garage_car_present
+
+laundry:
+  name: Laundry Room
+  entities:
+    - alarm_control_panel.alarm_panel
+    - sensor.alarm_panel_display 
+    - sensor.laundry_room_freezer_temperature
+    - sensor.laundry_room_fridge_temperature
+    - sensor.laundry_room_home_automation_cabinet_temperature
+    - sensor.samsung_clp_680_series_192_168_10_44
+    - sensor.samsung_clp_680_series_192_168_10_44_toner_black
+    - sensor.samsung_clp_680_series_192_168_10_44_toner_cyan
+    - sensor.samsung_clp_680_series_192_168_10_44_toner_magenta
+    - sensor.samsung_clp_680_series_192_168_10_44_toner_yellow
+    - sensor.samsung_clp_680_series_192_168_10_44_output_tray_0
+    - sensor.samsung_clp_680_series_192_168_10_44_tray_1
+    - sensor.samsung_clp_680_series_192_168_10_44_tray_2
+    - sensor.watts_mainhouse_laundry_room
+    - sensor.watts_mainhouse_washer
+    - sensor.watts_mainhouse_dryer
+
+master_bedroom:
+  name: Master Bedroom
+  entities:
+    - binary_sensor.master_bedroom_sliding_door
+    - binary_sensor.master_bedroom_window
+    - light.switchlinc_dimmer_24_83_de
+    - light.switchlinc_dimmer_24_8d_e9 
+    - light.keypad_with_dimmer_25_06_a1_main
+    - switch.keypad_with_dimmer_25_06_a1_button_a 
+    - switch.keypad_with_dimmer_25_06_a1_button_b
+    - switch.keypad_with_dimmer_25_06_a1_button_c
+    - switch.keypad_with_dimmer_25_06_a1_button_d 
+    - sensor.master_bedroom_north_wall_temperature
+    - sensor.watts_mainhouse_master_bedroom
+
+master_bathroom:
+  name: Master Bathroom
+  entities:
+    - media_player.bathroom
+    - sensor.watts_mainhouse_master_tub
+    - light.switchlinc_dimmer_24_8d_e9
+    - light.switchlinc_dimmer_24_83_de
+    
+
+ac_north:
+  name: North AC
+  entities:
+    - climate.mainnorth
+    - sensor.ac_north_humidity
+    - sensor.watts_mainhouse_ac_north
+
+ac_south:
+  name: South AC
+  entities:
+    - climate.mainsouth
+    - sensor.ac_south_humidity
+    - sensor.ac_south_inside_air_quality
+    - sensor.ac_south_inside_gas_ohms
+    - sensor.ac_south_inside_humidity
+    - sensor.ac_south_inside_pressure
+    - sensor.ac_south_inside_temperature
+    - sensor.ac_south_outside_air_quality
+    - sensor.ac_south_outside_gas_ohms
+    - sensor.ac_south_outside_humidity
+    - sensor.ac_south_outside_pressure
+    - sensor.ac_south_outside_temperature
+    - sensor.mainhouse_ac_south
+    - sensor.ac_south_pdiff
+    - binary_sensor.ac_south_fan_state
+
+living_room:
+  name: Living Room
+  entities:
+    - binary_sensor.living_room_sliding_door
+    - binary_sensor.rear_windows
+    - remote.entertainment_center
+    - sensor.watts_mainhouse_entertainment_center
+    - remote.entertainment_center
+
+nook:
+  name: Nook
+  entities:
+    - light.switchlinc_dimmer_38_26_60
+    - light.switchlinc_dimmer_38_db_4a
+    - light.switchlinc_dimmer_38_e1_bb
+    - sensor.watts_mainhouse_nook
+    - switch.on_off_outlet_38_f4_38_bottom
+    - switch.on_off_outlet_38_f4_38_top
+    - switch.switchlinc_relay_dual_band_38_76_87
+    - light.switchlinc_dimmer_38_26_60
+
+back_yard:
+  name: Back Yard
+  entities:
+    - sensor.lawn_moisture_0
+    - sensor.lawn_moisture_1
+    - sensor.lawn_moisture_2
+    - sensor.lawn_moisture_3
+    - sensor.sprinkler_box_humidity
+    - sensor.sprinkler_box_temperature
+    - sensor.sprinkler_box_humidity_raw
+    # - sensor.sprinkler_water_usage_counter_a
+    # - sensor.sprinkler_water_usage_counter_b
+    - switch.micro_on_off_2b_2a_50
+    - switch.micro_on_off_2b_28_dd
+    - switch.micro_on_off_2b_2a_2a
+    - switch.micro_on_off_2b_28_fd
+
+front_yard:
+  name: Front Yard
+  entities:
+    - switch.on_off_outdoor_module_25_98_9b
+    - switch.on_off_outdoor_module_25_9b_6d
+    - switch.switchlinc_relay_dual_band_23_df_7e
+    - switch.switchlinc_relay_dual_band_23_fd_51
+    - switch.switchlinc_relay_dual_band_23_db_df
+    
+spa_room:
+  name: Spa Room
+  entities:
+    - light.switchlinc_dimmer_1c_af_58
+    - light.in_linelinc_dimmer_1b_d4_4c
+    - light.keypadlinc_dimmer_1c_17_a0_main
+    - switch.keypadlinc_dimmer_1c_17_a0_button_a
+    - switch.keypadlinc_dimmer_1c_17_a0_button_b
+    - switch.keypadlinc_dimmer_1c_17_a0_button_c
+    - switch.keypadlinc_dimmer_1c_17_a0_button_d
+    - sensor.watts_mainhouse_spa
+    - sensor.watts_mainhouse_spa_room
+    
+porch:
+  name: Back Porch
+  entities:
+    - light.keypad_with_dimmer_22_f9_b1_main
+    - switch.keypad_with_dimmer_22_f9_b1_button_a
+    - switch.keypad_with_dimmer_22_f9_b1_button_b
+    - switch.keypad_with_dimmer_22_f9_b1_button_c
+    - switch.keypad_with_dimmer_22_f9_b1_button_d
+    
+north_hall:
+  name: North Hallway
+  entities:
+    - light.switchlinc_dimmer_38_9a_e0
+    - light.switchlinc_dimmer_25_45_5c
+    - light.switchlinc_dimmer_38_af_f9
+
+aquarium:
+  name: Aquarium
+  entities:
+    - sensor.big_aquarium_intake_fan_temperature
+    - sensor.big_aquarium_led_driver_2_temperature
+    - sensor.big_aquarium_led_driver_3_temperature
+    - sensor.big_aquarium_led_driver_4_temperature
+    - sensor.big_aquarium_led_wall_temp_temperature
+    - sensor.big_aquarium_wall_humidity
+    - sensor.big_aquarium_wall_illuminance
+    - sensor.big_aquarium_wall_pressure
+    - sensor.big_aquarium_wall_temperature
+    - sensor.28_487862040000_temperature
+    - sensor.watts_mainhouse_fishtank_a
+    - sensor.watts_mainhouse_fishtank_b

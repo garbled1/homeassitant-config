@@ -1,0 +1,13 @@
+- platform: limitlessled
+  bridges:
+    - host: mil1wifi.garbled.net
+      groups:
+        - number: 1
+          name: Front Porch
+        - number: 2
+          name: Foyer
+        - number: 3
+          name: Kitchen
+        - number: 4
+          name: Master Hallway
+      port: 8899

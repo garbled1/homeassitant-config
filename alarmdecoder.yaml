@@ -1,0 +1,30 @@
+device:
+  type: socket
+  host: mimosa.garbled.net
+  port: 10000
+panel_display: true
+zones:
+  1:
+    name: Kitchen Door
+    type: door
+  2:
+    name: Living Room Sliding Door
+    type: door
+  3:
+    name: Front Door
+    type: door
+  4:
+    name: Rear Windows
+    type: window
+  5:
+    name: Library Window
+    type: window
+  6:
+    name: Office Window
+    type: window
+  7:
+    name: Master Bedroom Sliding Door
+    type: door
+  8:
+    name: Master Bedroom Window
+    type: window

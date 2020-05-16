@@ -1,0 +1,243 @@
+- platform: template
+  sensors:
+    cave_humidity:
+      friendly_name: "Cave Humidity"
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('climate.cave', 'current_humidity') }}"
+      icon_template: mdi:water-percent
+      device_class: humidity
+    ac_north_humidity:
+      friendly_name: "AC North Humidity"
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('climate.mainnorth', 'current_humidity') }}"
+      icon_template: mdi:water-percent
+      device_class: humidity
+    ac_south_humidity:
+      friendly_name: "AC South Humidity"
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('climate.mainsouth', 'current_humidity') }}"
+      icon_template: mdi:water-percent
+      device_class: humidity
+    sprinkler_wateruse:
+      friendly_name: "Sprinkler Water Usage"
+      unit_of_measurement: "Gallons"
+      value_template: '{{ states("sensor.sprinkler_water_usage_counter_a") | float }}'
+      icon_template: mdi:water-pump
+    mainhouse_kwh:
+      friendly_name: "Mains kW/h"
+      unit_of_measurement: "kW/h"
+      value_template: '{{ state_attr("sensor.watts_mainhouse_mains", "watt_seconds") | float / 3600000}}'
+      icon_template: mdi:gauge
+    ac_south_pdiff:
+      friendly_name: "AC South Pressure Difference"
+      unit_of_measurement: 'hPa'
+      value_template: "{{ (states('sensor.ac_south_inside_pressure') | float - states('sensor.ac_south_outside_pressure') | float) | round(5) }}"
+      icon_template: mdi:arrow-collapse-vertical
+    double_garage_status:
+      friendly_name: Double Garage Status
+      value_template: '{% if states.cover.double_garage %}
+          {% if states.cover.double_garage.attributes["door_state"] == "open" %}
+            Open
+          {% elif states.cover.double_garage.attributes["door_state"] == "closed" %}
+            Closed
+          {% elif states.cover.double_garage.attributes["door_state"] == "opening" %}
+            Opening
+          {% elif states.cover.double_garage.attributes["door_state"] == "closing" %}
+            Closing
+          {% else %}
+            Unknown
+          {% endif %}
+          {% else %}
+          n/a
+          {% endif %}'
+    double_garage_car_present:
+      friendly_name: 'Mitusbishi in Garage'
+      value_template: '{% if states.cover.double_garage %}
+          {% if is_state("cover.double_garage", "open") %}
+            n/a
+          {% elif ((states.cover.double_garage.attributes["distance_sensor"] > 60) and (states.cover.double_garage.attributes["distance_sensor"] < 170)) %}
+            Yes
+          {% else %}
+            No
+          {% endif %}
+          {% else %}
+          n/a
+          {% endif %}'
+
+- platform: mqtt
+  name: 'ac_south_inside-humidity'
+  state_topic: 'ac_south/bme680-0x76-humidity'
+  unit_of_measurement: '%'
+- platform: mqtt
+  name: 'ac_south_inside-temperature'
+  state_topic: 'ac_south/bme680-0x76-temperature'
+  unit_of_measurement: '°C'
+- platform: mqtt
+  name: 'ac_south_inside-pressure'
+  state_topic: 'ac_south/bme680-0x76-pressure'
+  value_template: '{{ value | float - 1.04 }}'
+  unit_of_measurement: 'hPa'
+- platform: mqtt
+  name: 'ac_south_inside-air_quality'
+  state_topic: 'ac_south/bme680-0x76-air_qual'
+  unit_of_measurement: '%'
+- platform: mqtt
+  name: 'ac_south_inside-gas_ohms'
+  state_topic: 'ac_south/bme680-0x76-gas_ohms'
+  unit_of_measurement: 'Ω'
+
+- platform: mqtt
+  name: 'ac_south_outside-humidity'
+  state_topic: 'ac_south/bme680-0x77-humidity'
+  unit_of_measurement: '%'
+- platform: mqtt
+  name: 'ac_south_outside-temperature'
+  state_topic: 'ac_south/bme680-0x77-temperature'
+  unit_of_measurement: '°C'
+- platform: mqtt
+  name: 'ac_south_outside-pressure'
+  state_topic: 'ac_south/bme680-0x77-pressure'
+  unit_of_measurement: 'hPa'
+- platform: mqtt
+  name: 'ac_south_outside-air_quality'
+  state_topic: 'ac_south/bme680-0x77-air_qual'
+  unit_of_measurement: '%'
+- platform: mqtt
+  name: 'ac_south_outside-gas_ohms'
+  state_topic: 'ac_south/bme680-0x77-gas_ohms'
+  unit_of_measurement: 'Ω'
+
+# garage envirophat
+- platform: mqtt
+  name: garage_temperature
+  state_topic: merope/envirophat/temperature
+  unit_of_measurement: '°C'
+- platform: mqtt
+  name: garage_pressure
+  state_topic: merope/envirophat/pressure
+  unit_of_measurement: 'hPa'
+- platform: mqtt
+  name: garage_lux
+  state_topic: merope/envirophat/lux
+  unix_of_measurement: 'lux'
+
+  
+# Phone presense from monitor
+- platform: mqtt
+  name: 'Cave Tim'
+  state_topic: 'monitor/ain/tim_s9'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+- platform: mqtt
+  name: 'Laundry Tim'
+  state_topic: 'monitor/mimosa/tim_s9'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+- platform: mqtt
+  name: 'Garage Tim'
+  state_topic: 'monitor/merope/tim_s9'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+
+- platform: mqtt
+  name: 'Cave Annie'
+  state_topic: 'monitor/ain/annie_lg'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+- platform: mqtt
+  name: 'Laundry Annie'
+  state_topic: 'monitor/mimosa/annie_lg'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+- platform: mqtt
+  name: 'Garage Annie'
+  state_topic: 'monitor/merope/annie_lg'
+  unit_of_measurement: '%'
+  value_template: '{{ value_json.confidence }}'
+
+- platform: min_max
+  name: 'Tim Home'
+  type: max
+  round_digits: 0
+  entity_ids:
+    - sensor.cave_tim
+    - sensor.laundry_tim
+    - sensor.garage_tim
+
+- platform: min_max
+  name: 'Annie Home'
+  type: max
+  round_digits: 0
+  entity_ids:
+    - sensor.cave_annie
+    - sensor.laundry_annie
+    - sensor.garage_annie
+
+- platform: onewire
+  host: ain.garbled.net
+  names:
+    # 1D.03A70D000000: 'Sprinkler Water Usage'
+    EF.F49020150000: 'Lawn'
+    EF.BCA620150000: 'Cave Hub'
+    EF.F06120150000: 'Sprinkler Box'
+
+- platform: onewire
+  host: mimosa.garbled.net
+  names:
+    EF.D76020150000: "Laundry Hub"
+    10.4ED0A0020800: "Big Aquarium LED Wall Temp"
+    28.D03262040000: "Big Aquarium Vent Fan"
+    28.487862040000: "Big Aquarium LED Driver 1"
+    28.F8E062040000: "Big Aquarium LED Driver 3"
+    28.FC8062040000: "Big Aquarium LED Driver 4"
+    28.AA3D62040000: "Big Aquarium Intake Fan"
+    28.7E6262040000: "Big Aquarium AC Ouput"
+    28.FE7862040000: "Big Aquarium LED Driver 2"
+    28.ED3462040000: "North Hallway AC Intake"
+    28.1D4362040000: "Big Aquarium LED Driver 5"
+    28.D77062040000: "Laundry Room Home Automation Cabinet"
+    28.F7A962040000: "Garage Temp"
+    26.BCA421010000: "Big Aquarium Wall"
+    28.332062040000: "Office East Wall"
+    28.1B7062040000: "Laundry Room Fridge"
+    28.7B2562040000: "Laundry Room Freezer"
+    28.9BF162040000: "Guest Room South Wall"
+    28.FB2C62040000: "Master Bedroom North Wall"
+
+- platform: climacell
+  api_key: !secret climacell_api_key
+  name: cc
+  monitored_conditions:
+    realtime:
+      - weather_condition
+      - visibility
+      - cloud_cover
+      - pressure
+      - moon_phase
+      - sunset
+      - sunrise
+      - pm25
+      - pm10
+      - o3
+      - no2
+      - co
+      - so2
+      - epa_aqi
+      - epa_primary_pollutant
+      - epa_health_concern
+      - pollen_tree
+      - pollen_weed
+      - pollen_grass
+      - fire_index
+    forecast:
+      - weather_condition
+      - temperature
+      - precipitation
+      - precipitation_probability
+  scan_interval:
+    # At least one of these must be specified:
+    days: 0
+    hours: 1
+    minutes: 0
+    seconds: 0
+    milliseconds: 0

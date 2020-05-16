@@ -1,0 +1,59 @@
+- platform: mjpeg
+  name: Front Door Camera
+  mjpeg_url: http://axis-1/mjpg/1/video.mjpg?camera=1
+  still_image_url: http://axis-1/jpg/image.jpg?camera=1
+
+- platform: mjpeg
+  name: Front Porch Camera
+  mjpeg_url: http://axis-1/mjpg/1/video.mjpg?camera=2
+  still_image_url: http://axis-1/jpg/image.jpg?camera=2
+
+- platform: mjpeg
+  name: Kitchen Door Camera
+  mjpeg_url: http://axis-1/mjpg/1/video.mjpg?camera=3
+  still_image_url: http://axis-1/jpg/image.jpg?camera=3
+
+- platform: mjpeg
+  name: South Gate Camera
+  mjpeg_url: http://axis-1/mjpg/1/video.mjpg?camera=4
+  still_image_url: http://axis-1/jpg/image.jpg?camera=4
+
+- platform: mjpeg
+  name: Rear Garden Camera
+  mjpeg_url: http://axis-2/mjpg/1/video.mjpg?camera=1
+  still_image_url: http://axis-2/jpg/image.jpg?camera=1
+
+- platform: mjpeg
+  name: BBQ Camera
+  mjpeg_url: http://axis-2/mjpg/1/video.mjpg?camera=2
+  still_image_url: http://axis-2/jpg/image.jpg?camera=2
+
+- platform: mjpeg
+  name: Rear North Camera
+  mjpeg_url: http://axis-2/mjpg/1/video.mjpg?camera=3
+  still_image_url: http://axis-2/jpg/image.jpg?camera=3
+
+- platform: mjpeg
+  name: Garage Driveway Camera
+  mjpeg_url: http://axis-2/mjpg/1/video.mjpg?camera=4
+  still_image_url: http://axis-2/jpg/image.jpg?camera=4
+
+- platform: mjpeg
+  name: Garage Door Camera
+  mjpeg_url: http://axis-3/mjpg/1/video.mjpg?camera=1
+  still_image_url: http://axis-3/jpg/image.jpg?camera=1
+
+- platform: mjpeg
+  name: Cave Door Camera
+  mjpeg_url: http://axis-3/mjpg/1/video.mjpg?camera=2
+  still_image_url: http://axis-3/jpg/image.jpg?camera=2
+
+- platform: mjpeg
+  name: Cave West Camera
+  mjpeg_url: http://axis-3/mjpg/1/video.mjpg?camera=3
+  still_image_url: http://axis-3/jpg/image.jpg?camera=3
+
+- platform: mjpeg
+  name: Cave East Camera
+  mjpeg_url: http://axis-3/mjpg/1/video.mjpg?camera=4
+  still_image_url: http://axis-3/jpg/image.jpg?camera=4

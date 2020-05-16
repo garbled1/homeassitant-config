@@ -1,0 +1,18 @@
+spk_water_monthly:
+  source: sensor.flow_sensor_clicks
+  cycle: monthly
+spk_water_daily:
+  source: sensor.flow_sensor_clicks
+  cycle: daily
+mh_kwh_monthly:
+  source: sensor.mainhouse_kwh
+  cycle: monthly
+  tariffs:
+    - peak
+    - offpeak
+mh_kwh_daily:
+  source: sensor.mainhouse_kwh
+  cycle: daily
+  tariffs:
+    - peak
+    - offpeak
